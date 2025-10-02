@@ -1,0 +1,43 @@
+# Core API & UI
+fastapi
+uvicorn[standard]
+streamlit
+
+# LLM + AI
+google-generativeai
+langgraph
+tavily-python
+
+# Data models & utilities
+pydantic
+python-dotenv
+numpy
+pandas
+
+# Search & scraping
+httpx
+beautifulsoup4
+readability-lxml
+lxml
+redis
+python-dateutil
+
+# Vector storage & retrieval
+chromadb
+rank-bm25
+scikit-learn
+
+# PDF export
+weasyprint
+markdown2
+
+# Text processing
+nltk
+
+# Logging & debugging
+rich
+
+# Optional but useful
+requests
+pytest
+weasyprint
