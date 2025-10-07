@@ -120,5 +120,16 @@ Built with ❤️ to showcase multi-agent workflows, LangGraph, and production-r
 
 Developed by **Geethanjali**  
 
+## Demo
+
+<img width="1390" height="729" alt="image" src="https://github.com/user-attachments/assets/ffc93b26-7dd8-492a-b5c9-efac1f91528d" />
+<img width="1919" height="847" alt="image" src="https://github.com/user-attachments/assets/324bbce8-b285-4adc-ba1c-ef329eefcb8f" />
+<img width="1917" height="640" alt="image" src="https://github.com/user-attachments/assets/485932f7-4dce-4020-b082-f1f182c2c59e" />
+<img width="1366" height="637" alt="image" src="https://github.com/user-attachments/assets/ede3be5f-9507-45a4-aac0-c73cef3cadfa" />
+<img width="1256" height="377" alt="image" src="https://github.com/user-attachments/assets/f2be5880-64b5-421a-9603-c4d516cae007" />
+
+
+
+
 
 
