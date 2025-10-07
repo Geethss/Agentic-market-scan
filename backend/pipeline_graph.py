@@ -1,4 +1,3 @@
-# backend/pipeline_graph.py
 """
 LangGraph pipeline for Agentic Market Scan.
 
@@ -23,7 +22,7 @@ from typing import TypedDict, List, Dict, Any, Optional
 
 from langgraph.graph import StateGraph, END
 
-# Import your agents
+
 from backend.agents.decompose import decompose_topic
 from backend.agents.scout import scout
 from backend.agents.ingest import ingest_sources
@@ -35,9 +34,7 @@ logger = logging.getLogger(__name__)
 logger.setLevel(logging.INFO)
 
 
-# -------------------------
-# Pipeline State definition
-# -------------------------
+
 class PipelineState(TypedDict, total=False):
     job_id: str
     topic: str
@@ -55,9 +52,7 @@ class PipelineState(TypedDict, total=False):
     duration: float
 
 
-# -------------------------
-# Node wrappers
-# -------------------------
+
 def node_decompose(state: PipelineState) -> PipelineState:
     logger.info("[decompose] topic=%s", state["topic"])
     dec = decompose_topic(state["topic"], state.get("constraints"), use_llm=True)
@@ -123,19 +118,19 @@ def node_extract(state: PipelineState) -> PipelineState:
             # Generate embedding using our sentence-transformers model
             query_embedding = embedder.encode([field_query])[0].tolist()
             
-            # Query Chroma using our embedding
+            
             results = query_by_embedding(
                 collection_name="snippets",
                 embedding=query_embedding,
-                top_k=6  # Get more results per field for better diversity
+                top_k=6  
             )
             
             # Convert Chroma results to the format expected by extract_vendors
             field_snippets = []
             if results and "documents" in results:
-                documents = results.get("documents", [[]])[0]  # First query result
-                metadatas = results.get("metadatas", [[]])[0]  # First query result
-                ids = results.get("ids", [[]])[0]  # First query result
+                documents = results.get("documents", [[]])[0]  
+                metadatas = results.get("metadatas", [[]])[0] 
+                ids = results.get("ids", [[]])[0]  
                 
                 for i, doc in enumerate(documents):
                     metadata = metadatas[i] if i < len(metadatas) else {}
@@ -198,9 +193,7 @@ def node_write(state: PipelineState) -> PipelineState:
     return state
 
 
-# -------------------------
-# Build the graph
-# -------------------------
+
 graph = StateGraph(PipelineState)
 
 graph.add_node("decompose", node_decompose)
@@ -210,10 +203,10 @@ graph.add_node("extract", node_extract)
 graph.add_node("score", node_score)
 graph.add_node("write", node_write)
 
-# Set entry point
+
 graph.set_entry_point("decompose")
 
-# Add edges
+
 graph.add_edge("decompose", "scout")
 graph.add_edge("scout", "ingest")
 graph.add_edge("ingest", "extract")
@@ -224,13 +217,8 @@ graph.add_edge("write", END)
 pipeline = graph.compile()
 
 
-# -------------------------
-# Convenience wrapper
-# -------------------------
+
 def run_graph_sync(job_id: str, topic: str, constraints: Optional[str] = None, user_id: Optional[str] = None, user_plan: str = "free") -> PipelineState:
-    """
-    Run the full LangGraph pipeline synchronously with initial state.
-    """
     init_state: PipelineState = {
         "job_id": job_id,
         "topic": topic,
